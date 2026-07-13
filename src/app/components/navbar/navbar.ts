@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Auth } from '../../services/auth';
 import { CommonModule } from '@angular/common';
+import { environment } from '../../../environments/environment.development';
 
 @Component({
   selector: 'app-navbar',
@@ -13,7 +14,7 @@ export class Navbar {
   authService = inject(Auth);
 
   loginWithGitHub() {
-    window.location.href = 'http://localhost:5282/api/auth/login';
+    window.location.href = `${environment.apiUrl}/auth/login`;
   }
 
   logout() {
