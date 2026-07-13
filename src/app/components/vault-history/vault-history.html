@@ -1,0 +1,69 @@
+<div class="history-container">
+  <header class="history-header">
+    <div class="header-left">
+      <h2>🏛️ The PostgreSQL Vault</h2>
+      <p>Immutable history log of AI-synthesized release assets.</p>
+    </div>
+  </header>
+
+  <div class="history-grid">
+    
+    <div class="timeline-sidebar">
+      <h3>Saved Archives</h3>
+      
+      @if (isLoading) {
+        <div class="mini-loader">Loading records...</div>
+      } @else if (!records || records.length === 0) {
+        <div class="empty-timeline">No vaulted packages found.</div>
+      } @else {
+        @for (record of records; track record.id) {
+          <div 
+            class="timeline-card" 
+            [class.active]="selectedRecord?.id === record.id"
+            (click)="selectRecord(record)">
+            <span class="mini-tag" [ngClass]="record.semanticVersion ? record.semanticVersion.toLowerCase() : ''">
+                {{ record.semanticVersion || 'Unknown' }}
+            </span>
+            <h4 class="card-title">{{ record.title }}</h4>
+            <small class="card-date">{{ record.createdAt ? (record.createdAt | date:'shortDate') : 'Unknown Date' }}</small>
+          </div>
+        }
+      }
+    </div>
+
+    <div class="detail-viewer">
+      
+      @if (!selectedRecord) {
+        <div class="empty-detail">
+          <p>Select an archive entry from the timeline to pull down live record information.</p>
+        </div>
+      } @else {
+        <div class="detail-content">
+          <div class="detail-meta">
+            <span class="version-badge" [ngClass]="selectedRecord.semanticVersion ? selectedRecord.semanticVersion.toLowerCase() : ''">
+              {{ selectedRecord.semanticVersion }} Package
+            </span>
+            <h3>{{ selectedRecord.title }}</h3>
+            <p class="timestamp">Archived on: {{ selectedRecord.createdAt ? (selectedRecord.createdAt | date:'medium') : 'Unknown Date' }}</p>
+          </div>
+
+          <div class="display-section">
+            <h5>Generated Release Output</h5>
+            <pre class="code-display">{{ selectedRecord.markdownNotes }}</pre>
+          </div>
+
+          <div class="display-section">
+            <h5>Social Copywrite Record</h5>
+            <p class="social-display">{{ selectedRecord.socialPost }}</p>
+          </div>
+
+          <div class="display-section">
+            <h5>Raw System Input Data (Original Diff Summary)</h5>
+            <pre class="raw-display">{{ selectedRecord.rawInput }}</pre>
+          </div>
+        </div>
+      }
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,26 @@
+<nav class="global-navbar">
+  <div class="nav-brand">
+    <span class="logo">🏛️</span>
+    <span class="title">DevVault</span>
+  </div>
+
+  <div class="nav-links">
+    <a routerLink="/dashboard" routerLinkActive="active" class="nav-item">
+      ⚙️ My Workspace
+    </a>
+    <a routerLink="/history" routerLinkActive="active" class="nav-item">
+      🗄️ My Vault
+    </a>
+  </div>
+
+  <div class="nav-auth">
+    <button *ngIf="!authService.isAuthenticated()" class="btn-auth-github" (click)="loginWithGitHub()">
+      Log in with GitHub
+    </button>
+
+    <div *ngIf="authService.isAuthenticated()" class="user-profile">
+      <span class="greeting">Hi, {{ authService.getUsername() }}</span>
+      <button class="btn-logout" (click)="logout()">Logout</button>
+    </div>
+  </div>
+</nav>

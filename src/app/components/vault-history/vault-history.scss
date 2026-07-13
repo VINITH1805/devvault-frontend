@@ -1,0 +1,156 @@
+/* Target the scrollbar thumb ONLY when the user is hovering over a scrollable area */
+*:hover::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.4); 
+}
+
+::-webkit-scrollbar-thumb {
+  background: transparent; 
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar {
+  width: 6px; 
+}
+::-webkit-scrollbar-track {
+  background: transparent; 
+}
+
+.history-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  color: #e2e8f0;
+}
+
+.history-header {
+  flex: 0 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+  margin-bottom: 0.5rem; 
+  border-bottom: 1px solid #334155;
+  padding-bottom: 0.75rem; 
+  
+  h2 { 
+    margin: 0 0 0.15rem 0; 
+    color: #fff; 
+    font-size: 1.4rem; /* Down from 1.75rem */
+  } 
+  
+  p { 
+    margin: 0; 
+    color: #94a3b8; 
+    font-size: 0.85rem; /* Down from 0.95rem */
+  }
+}
+
+.btn-nav {
+  background: #334155;
+  color: #fff;
+  border: 1px solid #475569;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  &:hover { background: #475569; }
+}
+
+.history-grid {
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  gap: 2rem;
+  height: calc(100vh - 180px);
+}
+
+.timeline-sidebar {
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 12px;
+  padding: 1.25rem;
+  overflow-y: auto;
+  h3 { color: #94a3b8; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; margin-top: 0; margin-bottom: 1rem; }
+}
+
+.timeline-card {
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  &:hover { border-color: #475569; background: #131d31; }
+  &.active { border-color: #3b82f6; background: #1e293b; box-shadow: inset 4px 0 0 #3b82f6; }
+}
+
+.mini-tag {
+  font-size: 0.7rem;
+  font-weight: 800;
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  text-transform: uppercase;
+  display: inline-block;
+  margin-bottom: 0.5rem;
+  &.major { background: rgba(239, 68, 68, 0.2); color: #f87171; }
+  &.minor { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+  &.patch { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+}
+
+.card-title { margin: 0 0 0.5rem 0; font-size: 0.95rem; color: #f1f5f9; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.card-date { color: #64748b; display: block; }
+
+.detail-viewer {
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 12px;
+  padding: 2rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.detail-meta {
+  border-bottom: 1px solid #334155;
+  padding-bottom: 1.25rem;
+  margin-bottom: 1.5rem;
+  h3 { margin: 0.5rem 0; font-size: 1.75rem; color: #fff; }
+  .timestamp { color: #64748b; margin: 0; font-size: 0.9rem; }
+}
+
+.version-badge {
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
+  text-transform: uppercase;
+  &.major { background: #ef4444; color: #fff; }
+  &.minor { background: #f59e0b; color: #1e293b; }
+  &.patch { background: #10b981; color: #fff; }
+}
+
+.display-section {
+  margin-bottom: 1.5rem;
+  h5 { color: #94a3b8; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; margin-top: 0; margin-bottom: 0.5rem; }
+}
+
+.code-display, .raw-display {
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 0;
+  white-space: pre-wrap;
+  font-family: monospace;
+  color: #cbd5e1;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.raw-display { color: #64748b; font-size: 0.85rem; }
+.social-display { background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 1rem; margin: 0; color: #38bdf8; font-style: italic; }
+
+.spinner-container { margin: auto; display: flex; justify-content: center; }
+.loading-spinner { border: 4px solid #334155; border-top: 4px solid #3b82f6; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; }
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }

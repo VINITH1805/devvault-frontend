@@ -1,0 +1,108 @@
+.global-navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #0f172a;
+    border-bottom: 1px solid #334155;
+    color: #f8fafc;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+
+    .logo {
+        font-size: 1.5rem;
+    }
+
+    .title {
+        font-size: 1.25rem;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+    }
+}
+
+.nav-links {
+    display: flex;
+    gap: 1rem;
+    background: #1e293b;
+    padding: 0.35rem;
+    border-radius: 8px;
+    border: 1px solid #334155;
+}
+
+.nav-item {
+    color: #94a3b8;
+    text-decoration: none;
+    padding: 0.5rem 1.25rem;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+
+    &:hover {
+        color: #f8fafc;
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    &.active {
+        background: #3b82f6;
+        color: #ffffff;
+        box-shadow: 0 2px 10px rgba(59, 130, 246, 0.3);
+    }
+}
+
+.btn-auth-placeholder {
+    background: #1e293b;
+    color: #94a3b8;
+    border: 1px dashed #475569;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: not-allowed;
+}
+
+.btn-auth-github {
+    background: #2ea043;
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem; 
+
+  .greeting {
+    color: #f1f5f9; 
+    font-size: 0.95rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+  }
+
+  .btn-logout {
+    background-color: transparent;
+    color: #94a3b8; 
+    border: 1px solid #475569; 
+    padding: 0.4rem 1rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+      background-color: #ef4444; 
+      color: white;
+      border-color: #ef4444;
+      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2); 
+    }
+  }
+}
