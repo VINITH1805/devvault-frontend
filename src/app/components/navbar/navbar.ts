@@ -14,7 +14,7 @@ export class Navbar {
   authService = inject(Auth);
 
   loginWithGitHub() {
-    window.location.href = `${environment.apiUrl}/auth/login`;
+    window.location.href = `${environment.apiUrl}/api/auth/login`;
   }
 
   logout() {
