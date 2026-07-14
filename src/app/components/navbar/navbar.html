@@ -19,7 +19,7 @@
     </button>
 
     <div *ngIf="authService.isAuthenticated()" class="user-profile">
-      <span class="greeting">Hi, {{ authService.getUsername() }}</span>
+      <span class="greeting" title="{{ authService.getUsername() }}">Hi, {{ authService.getUsername() }}</span>
       <button class="btn-logout" (click)="logout()">Logout</button>
     </div>
   </div>

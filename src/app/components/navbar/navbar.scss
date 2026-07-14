@@ -7,6 +7,14 @@
     border-bottom: 1px solid #334155;
     color: #f8fafc;
     font-family: 'Segoe UI', system-ui, sans-serif;
+    
+    /* 👇 Added for responsive wrapping 👇 */
+    flex-wrap: wrap; 
+    gap: 1rem;
+
+    @media (max-width: 768px) {
+        padding: 1rem;
+    }
 }
 
 .nav-brand {
@@ -32,6 +40,13 @@
     padding: 0.35rem;
     border-radius: 8px;
     border: 1px solid #334155;
+
+    /* 👇 Mobile: Forces the navigation to the bottom row, taking full width 👇 */
+    @media (max-width: 768px) {
+        order: 3; 
+        width: 100%;
+        justify-content: center;
+    }
 }
 
 .nav-item {
@@ -42,6 +57,15 @@
     font-weight: 600;
     font-size: 0.95rem;
     transition: all 0.2s ease;
+    white-space: nowrap; /* Prevents text from breaking into two lines */
+
+    /* 👇 Mobile: Makes the pills equal size and slightly smaller 👇 */
+    @media (max-width: 768px) {
+        flex: 1;
+        text-align: center;
+        padding: 0.5rem 0.5rem;
+        font-size: 0.85rem;
+    }
 
     &:hover {
         color: #f8fafc;
@@ -55,14 +79,11 @@
     }
 }
 
-.btn-auth-placeholder {
-    background: #1e293b;
-    color: #94a3b8;
-    border: 1px dashed #475569;
-    padding: 0.6rem 1.2rem;
-    border-radius: 6px;
-    font-weight: 600;
-    cursor: not-allowed;
+.nav-auth {
+    /* 👇 Mobile: Keeps the auth buttons in the top right 👇 */
+    @media (max-width: 768px) {
+        order: 2; 
+    }
 }
 
 .btn-auth-github {
@@ -73,6 +94,11 @@
     border-radius: 6px;
     cursor: pointer;
     font-weight: 600;
+
+    @media (max-width: 768px) {
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
+    }
 }
 
 .user-profile {
@@ -80,11 +106,24 @@
   align-items: center;
   gap: 1.25rem; 
 
+  @media (max-width: 768px) {
+      gap: 0.75rem; /* Tighter spacing on mobile */
+  }
+
   .greeting {
     color: #f1f5f9; 
     font-size: 0.95rem;
     font-weight: 500;
     letter-spacing: 0.5px;
+    
+    /* 👇 Mobile: Truncates long usernames with an ellipsis (...) so they don't break the layout 👇 */
+    @media (max-width: 768px) {
+        font-size: 0.85rem;
+        max-width: 100px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
   }
 
   .btn-logout {
@@ -97,6 +136,11 @@
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
+
+    @media (max-width: 768px) {
+        padding: 0.3rem 0.75rem;
+        font-size: 0.8rem;
+    }
 
     &:hover {
       background-color: #ef4444; 

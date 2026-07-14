@@ -79,9 +79,7 @@
           }
           <button class="btn btn-success" (click)="saveRelease()"
             [disabled]="isSaving || saveSuccess || !authService.isAuthenticated()">
-            {{ !authService.isAuthenticated() ? '🔒 Log in to Save' : isSaving ? 'Vaulting...' : saveSuccess ? '✓ Saved
-            to
-            PostgreSQL Vault' : 'Commit to Database Vault' }}
+            {{ !authService.isAuthenticated() ? '🔒 Log in to Save' : isSaving ? 'Vaulting...' : saveSuccess ? '✓ Saved to PostgreSQL Vault' : 'Commit to Database Vault' }}
           </button>
         </div>
       </div>
