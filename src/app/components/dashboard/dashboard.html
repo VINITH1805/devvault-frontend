@@ -7,16 +7,29 @@
   <div class="workspace-grid">
     <div class="panel input-panel">
       <h3>1. Paste Code Changes</h3>
-      <textarea 
-        [(ngModel)]="rawGitDiff" 
+      <textarea [(ngModel)]="rawGitDiff"
         placeholder="Example: fixed login bug. updated database schema to include phone numbers. refactored auth controller..."
         [disabled]="isLoading">
       </textarea>
-      
-      <button 
-        class="btn btn-primary" 
-        (click)="generateNotes()" 
-        [disabled]="isLoading || !rawGitDiff.trim()">
+
+      <!-- NATIVE TOAST NOTIFICATION -->
+      @if (errorMessage) {
+      <div class="toast-notification">
+        <div class="toast-content">
+          <svg class="error-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          <div>
+            <strong class="toast-title">Generation Failed</strong>
+            <span class="toast-message">{{ errorMessage }}</span>
+          </div>
+        </div>
+      </div>
+      }
+
+      <button class="btn btn-primary" (click)="generateNotes()" [disabled]="isLoading || !rawGitDiff.trim()">
         {{ isLoading ? 'AI is analyzing...' : 'Generate Release Package' }}
       </button>
     </div>
@@ -25,41 +38,57 @@
       <h3>2. Generated Release Package</h3>
 
       @if (isLoading) {
-        <div class="spinner-container">
-          <div class="loading-spinner"></div>
-          <p>Gemini Pro is crunching your diff files...</p>
-        </div>
+      <div class="spinner-container">
+        <div class="loading-spinner"></div>
+        <p>Gemini Pro is crunching your diff files...</p>
+      </div>
       } @else if (generatedNotes) {
-        <div class="content-results">
-          <div class="meta-row">
-            <span class="version-tag" [ngClass]="generatedNotes.semanticVersion.toLowerCase()">
-              {{ generatedNotes.semanticVersion }} Impact
-            </span>
-            <input type="text" [(ngModel)]="releaseTitle" placeholder="Name this release version" class="title-input" />
-          </div>
-
-          <div class="output-box">
-            <h4>📝 Markdown Release Notes</h4>
-            <pre>{{ generatedNotes.markdownNotes }}</pre>
-          </div>
-
-          <div class="output-box">
-            <h4>🚀 Ready Social Copy</h4>
-            <p class="social-text">{{ generatedNotes.socialPost }}</p>
-          </div>
-
-          <div class="action-footer">
-            <button class="btn btn-success" (click)="saveRelease()"
-                [disabled]="isSaving || saveSuccess || !authService.isAuthenticated()">
-                {{ !authService.isAuthenticated() ? '🔒 Log in to Save' : isSaving ? 'Vaulting...' : saveSuccess ? '✓ Saved to
-                PostgreSQL Vault' : 'Commit to Database Vault' }}
-            </button>
-          </div>
+      <div class="content-results">
+        <div class="meta-row">
+          <span class="version-tag" [ngClass]="generatedNotes.semanticVersion.toLowerCase()">
+            {{ generatedNotes.semanticVersion }} Impact
+          </span>
+          <input type="text" [(ngModel)]="releaseTitle" placeholder="Name this release version" class="title-input" />
         </div>
+
+        <div class="output-box">
+          <h4>📝 Markdown Release Notes</h4>
+          <pre>{{ generatedNotes.markdownNotes }}</pre>
+        </div>
+
+        <div class="output-box">
+          <h4>🚀 Ready Social Copy</h4>
+          <p class="social-text">{{ generatedNotes.socialPost }}</p>
+        </div>
+
+        <div class="action-footer">
+          @if (errorMessage) {
+          <div class="toast-notification">
+            <div class="toast-content">
+              <svg class="error-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              <div>
+                <strong class="toast-title">Commit Failed</strong>
+                <span class="toast-message">{{ errorMessage }}</span>
+              </div>
+            </div>
+          </div>
+          }
+          <button class="btn btn-success" (click)="saveRelease()"
+            [disabled]="isSaving || saveSuccess || !authService.isAuthenticated()">
+            {{ !authService.isAuthenticated() ? '🔒 Log in to Save' : isSaving ? 'Vaulting...' : saveSuccess ? '✓ Saved
+            to
+            PostgreSQL Vault' : 'Commit to Database Vault' }}
+          </button>
+        </div>
+      </div>
       } @else {
-        <div class="empty-state">
-          <p>Awaiting raw input pipeline data...</p>
-        </div>
+      <div class="empty-state">
+        <p>Awaiting raw input pipeline data...</p>
+      </div>
       }
 
     </div>

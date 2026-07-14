@@ -25,6 +25,7 @@ export class Dashboard {
   isLoading: boolean = false;
   isSaving: boolean = false;
   saveSuccess: boolean = false;
+  errorMessage: string | null = null; 
 
   // AI response storage
   generatedNotes: GenerateReleaseResponse | null = null;  
@@ -36,6 +37,7 @@ export class Dashboard {
     this.isLoading = true;
     this.generatedNotes = null;
     this.saveSuccess = false;
+    this.errorMessage = null; // Clear any previous errors when starting a new request
 
     this.apiService.generateReleaseNotes({ rawGitDiff: this.rawGitDiff }).subscribe({
       next: (response) => {
@@ -52,9 +54,22 @@ export class Dashboard {
         console.error('Generation failed', err);
         this.isLoading = false;
         
-        this.cdr.detectChanges(); 
+        // 1. Set a highly professional error message based on the HTTP status code
+        if (err.status === 503 || err.status === 504 || err.status === 500) {
+          this.errorMessage = 'The AI Engine is currently experiencing high traffic or is temporarily unavailable. Please try again in a few moments.';
+        } else if (err.status === 400) {
+          this.errorMessage = 'The AI could not process this input. Please ensure you are providing a valid code diff or commit log.';
+        } else {
+          this.errorMessage = 'An unexpected connection error occurred. Please verify your network and try again.';
+        }
         
-        alert('AI generation failed. Please check backend logs.');
+        this.cdr.detectChanges(); 
+
+        // 2. Toast Simulation: Auto-hide the error message after 5 seconds
+        setTimeout(() => {
+          this.errorMessage = null;
+          this.cdr.detectChanges();
+        }, 5000);
       }
     });
   }
@@ -66,11 +81,19 @@ export class Dashboard {
     const currentUserId = this.authService.getUserId();
 
     if (!currentUserId) {
-      alert('Authentication error: Could not find your User ID. Please log out and back in.');
+      // 1. Show auth error in the toast instead of an alert
+      this.errorMessage = 'Authentication error: Could not find your User ID. Please log out and back in.';
+      this.cdr.detectChanges();
+      
+      setTimeout(() => {
+        this.errorMessage = null;
+        this.cdr.detectChanges();
+      }, 5000);
       return;
     }
 
     this.isSaving = true;
+    this.errorMessage = null; // Clear any existing errors
 
     this.apiService.saveToVault({
       userId: currentUserId, // We pass the real ID here!
@@ -85,6 +108,7 @@ export class Dashboard {
         this.saveSuccess = true;
         this.cdr.detectChanges(); 
         
+        // Success already has visual feedback on the button itself!
         setTimeout(() => {
           this.generatedNotes = null;
           this.rawGitDiff = '';
@@ -96,8 +120,15 @@ export class Dashboard {
       error: (err) => {
         console.error('Saving failed', err);
         this.isSaving = false;
+        
+        // 2. Show API save error in the toast instead of an alert
+        this.errorMessage = 'Failed to save to the database vault. Please check your connection and try again.';
         this.cdr.detectChanges(); 
-        alert('Failed to save to database vault.');
+        
+        setTimeout(() => {
+          this.errorMessage = null;
+          this.cdr.detectChanges();
+        }, 5000);
       }
     });
   }
